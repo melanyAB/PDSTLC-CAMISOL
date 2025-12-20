@@ -50,7 +50,7 @@ public class Proveedor extends JPanel {
     add(panelBotones, BorderLayout.NORTH);
 
     // --- CONFIGURACIÓN DE LA TABLA ---
-    String[] columnas = {"Cédula/RUC", "Nombre", "Apellido", "Celular", "Email", "Rubro", "Dirección", "Activo"};
+    String[] columnas = {"Cédula/RUC", "Nombre", "Apellido", "Celular", "Email", "Descripción", "Dirección", "Activo"};
     modelo = new DefaultTableModel(columnas, 0) {
       @Override
       public Class<?> getColumnClass(int column) {
@@ -79,7 +79,7 @@ public class Proveedor extends JPanel {
   }
 
   private void configurarEstiloTabla() {
-    // Colores de la tabla (Dark Theme)
+
     tabla.setBackground(new Color(31, 41, 55));
     tabla.setForeground(Color.WHITE);
     tabla.setGridColor(new Color(55, 65, 81));
@@ -166,7 +166,7 @@ public class Proveedor extends JPanel {
       if (textoCédula.getText().trim().isEmpty() || textoNombre.getText().trim().isEmpty() ||
         textoApellido.getText().trim().isEmpty() || textoCelular.getText().trim().isEmpty() ||
         textoEmail.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(diálogo, "Los campos obligatorios no pueden quedar vacíos.", "Error al agregar", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(diálogo, "Los campos obligatorios no pueden quedar vacíos.", "Error al agregar", JOptionPane.PLAIN_MESSAGE);
       } else {
         modelo.addRow(new Object[]{
           textoCédula.getText().trim(),
@@ -178,7 +178,7 @@ public class Proveedor extends JPanel {
           textoDirección.getText().trim(),
           true // Activo
         });
-        JOptionPane.showMessageDialog(diálogo, "Proveedor agregado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(diálogo, "Proveedor agregado exitosamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
       }
     });
 
@@ -188,7 +188,7 @@ public class Proveedor extends JPanel {
   }
 
   private void abrirDialogoActualizar() {
-    String cedula = JOptionPane.showInputDialog(this, "Ingrese la Cédula del proveedor:", "Actualizar proveedor", JOptionPane.QUESTION_MESSAGE);
+    String cedula = JOptionPane.showInputDialog(this, "Ingrese la Cédula del proveedor:", "Actualizar proveedor", JOptionPane.PLAIN_MESSAGE);
     if (cedula == null || cedula.trim().isEmpty()) return;
     cedula = cedula.trim();
 
@@ -200,7 +200,7 @@ public class Proveedor extends JPanel {
       }
     }
     if (foundIdx < 0) {
-      JOptionPane.showMessageDialog(this, "Proveedor no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this, "Proveedor no encontrado.", "Error", JOptionPane.PLAIN_MESSAGE);
       return;
     }
     final int rowIndexLocal = foundIdx;
@@ -248,7 +248,7 @@ public class Proveedor extends JPanel {
       modelo.setValueAt(textoDescripcion.getText().trim(), rowIndexLocal, 5);
       modelo.setValueAt(textoDireccion.getText().trim(),    rowIndexLocal, 6);
       modelo.setValueAt(chkActivo.isSelected(),          rowIndexLocal, 7);
-      JOptionPane.showMessageDialog(dialog, "Proveedor actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+      JOptionPane.showMessageDialog(dialog, "Proveedor actualizado exitosamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
       dialog.dispose();
     });
 
@@ -260,16 +260,16 @@ public class Proveedor extends JPanel {
   private void eliminar() {
     int fila = tabla.getSelectedRow();
     if (fila < 0) {
-      JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this, "Seleccione un proveedor para eliminar.", "Error", JOptionPane.PLAIN_MESSAGE);
       return;
     }
     JPasswordField contraseña = new JPasswordField();
     int opt = JOptionPane.showConfirmDialog(this, contraseña, "Contraseña admin", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
     if (opt == JOptionPane.OK_OPTION && ADMIN_PASSWORD.equals(new String(contraseña.getPassword()))) {
       modelo.removeRow(fila);
-      JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+      JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
     } else if (opt == JOptionPane.OK_OPTION) {
-      JOptionPane.showMessageDialog(this, "Contraseña incorrecta.", "Error autenticación", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this, "Contraseña incorrecta.", "Error autenticación", JOptionPane.PLAIN_MESSAGE);
     }
   }
 }

@@ -1,5 +1,6 @@
 package Presentación.Ventanas;
 
+import Presentación.Módulos.Proveedor;
 import Presentación.Recursos.Botón;
 import Presentación.Recursos.GestorAlertas;
 
@@ -203,15 +204,15 @@ public class VentanaPrincipal extends JFrame {
   }
 
   private void asignarEventos() {
-    btnInicio.addActionListener(e -> mostrarInicio());
-    btnClientes.addActionListener(e -> cambiarPanel("CLIENTES", new JPanel()));
-    btnAdmin.addActionListener(e -> cambiarPanel("ADMINISTRACIÓN", new JPanel()));
-    btnAuditoria.addActionListener(e -> cambiarPanel("AUDITORÍA", new JPanel()));
-    btnFacturacion.addActionListener(e -> cambiarPanel("FACTURACIÓN", new JPanel()));
-    btnProveedores.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
-    btnTanqueros.addActionListener(e -> cambiarPanel("TANQUEROS", new JPanel()));
+    botónInicio.addActionListener(e -> mostrarInicio());
+    botónClientes.addActionListener(e -> cambiarPanel("CLIENTES", new JPanel()));
+    botónAdmin.addActionListener(e -> cambiarPanel("ADMINISTRACIÓN", new JPanel()));
+    botónAuditoria.addActionListener(e -> cambiarPanel("AUDITORÍA", new JPanel()));
+    botónFacturacion.addActionListener(e -> cambiarPanel("FACTURACIÓN", new JPanel()));
+    botónProveedores.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
+    botónTanqueros.addActionListener(e -> cambiarPanel("TANQUEROS", new JPanel()));
 
-    btnSalir.addActionListener(e -> {
+    botónSalir.addActionListener(e -> {
       if(GestorAlertas.confirmarCerrarSesión(this, "¿Seguro que desea cerrar sesión?")) {
 
         dispose();
