@@ -21,16 +21,21 @@ public class Auditoría extends JPanel {
   }
 
   private void inicializarComponentes() {
-    setLayout(new BorderLayout(0, 20));
+    setLayout(new BorderLayout());
     setBackground(new Color(18, 18, 18));
-    setBorder(new EmptyBorder(20, 20, 20, 20));
+    setBorder(new EmptyBorder(10, 10, 10, 10));
 
-    JPanel panelHerramientas = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+    JPanel panelHerramientas = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
     panelHerramientas.setOpaque(false);
 
-    Botón btnConsultar = new Botón("Consultar Actividades", new Color(37, 99, 235));
-    Botón btnAlertas = new Botón("Alertas de Seguridad", new Color(234, 177, 0));
-    Botón btnExportar = new Botón("Exportar Informe", new Color(16, 185, 129));
+    Botón btnConsultar = new Botón("Consultar Actividades", new Color(70, 128, 139));
+    Botón btnAlertas = new Botón("Alertas de Seguridad", new Color(239, 68, 68));
+    Botón btnExportar = new Botón("Exportar Informe", new Color(249, 115, 22));
+
+    Dimension dimBoton = new Dimension(170, 40);
+    btnConsultar.setPreferredSize(dimBoton);
+    btnAlertas.setPreferredSize(dimBoton);
+    btnExportar.setPreferredSize(dimBoton);
 
     panelHerramientas.add(btnConsultar);
     panelHerramientas.add(btnAlertas);
@@ -79,19 +84,24 @@ public class Auditoría extends JPanel {
     tablaLogs = new JTable(modeloTabla);
     tablaLogs.setBackground(new Color(31, 41, 55));
     tablaLogs.setForeground(Color.WHITE);
-    tablaLogs.setRowHeight(30);
-    tablaLogs.setShowVerticalLines(false);
     tablaLogs.setGridColor(new Color(55, 65, 81));
+    tablaLogs.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    tablaLogs.setRowHeight(30);
+    tablaLogs.setSelectionBackground(new Color(75, 85, 99));
+    tablaLogs.setSelectionForeground(Color.WHITE);
 
+    // Cabecera (Header)
     JTableHeader header = tablaLogs.getTableHeader();
-    header.setBackground(new Color(0, 22, 141));
-    header.setForeground(Color.WHITE);
+    header.setBackground(new Color(243, 244, 246));
+    header.setForeground(new Color(31, 41, 55));
     header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setPreferredSize(new Dimension(0, 35));
 
+    // Renderizador para alinear texto y mantener colores
     DefaultTableCellRenderer render = new DefaultTableCellRenderer();
-    render.setHorizontalAlignment(JLabel.CENTER);
     render.setBackground(new Color(31, 41, 55));
     render.setForeground(Color.WHITE);
+    render.setHorizontalAlignment(SwingConstants.LEFT);
 
     for (int i = 0; i < tablaLogs.getColumnCount(); i++) {
       tablaLogs.getColumnModel().getColumn(i).setCellRenderer(render);

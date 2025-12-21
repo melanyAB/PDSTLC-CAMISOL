@@ -22,18 +22,25 @@ public class Cliente extends JPanel {
   }
 
   private void inicializarComponentes() {
-    setLayout(new BorderLayout(0, 20));
+    setLayout(new BorderLayout());
     setBackground(new Color(18, 18, 18));
-    setBorder(new EmptyBorder(20, 20, 20, 20));
+    setBorder(new EmptyBorder(10, 10, 10, 10));
 
-    JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+    JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
     panelBotones.setOpaque(false);
 
-    btnAgregar    = new Botón("Agregar", new Color(37, 99, 235));
-    btnActualizar = new Botón("Actualizar",        new Color(234, 177, 0));
-    btnConsultar  = new Botón("Consultar",         new Color(16, 185, 129));
-    btnCambiarEstado = new Botón("Cambiar Estado",      new Color(59, 130, 246));
-    btnEliminar   = new Botón("Eliminar",      new Color(239, 68, 68));
+    btnAgregar    = new Botón("Agregar Cliente", new Color(40, 167, 69));
+    btnConsultar  = new Botón("Consultar", new Color(70, 128, 139));
+    btnActualizar = new Botón("Actualizar", new Color(234, 177, 0));
+    btnCambiarEstado = new Botón("Cambiar Estado", new Color(147, 51, 234));
+    btnEliminar   = new Botón("Eliminar", new Color(239, 68, 68));
+
+    Dimension dimBoton = new Dimension(150, 40);
+    btnAgregar.setPreferredSize(dimBoton);
+    btnActualizar.setPreferredSize(dimBoton);
+    btnConsultar.setPreferredSize(dimBoton);
+    btnCambiarEstado.setPreferredSize(dimBoton);
+    btnEliminar.setPreferredSize(dimBoton);
 
     panelBotones.add(btnAgregar);
     panelBotones.add(btnActualizar);
@@ -74,19 +81,24 @@ public class Cliente extends JPanel {
     tablaClientes = new JTable(modeloTabla);
     tablaClientes.setBackground(new Color(31, 41, 55));
     tablaClientes.setForeground(Color.WHITE);
-    tablaClientes.setRowHeight(30);
-    tablaClientes.setShowVerticalLines(false);
     tablaClientes.setGridColor(new Color(55, 65, 81));
+    tablaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    tablaClientes.setRowHeight(30);
+    tablaClientes.setSelectionBackground(new Color(75, 85, 99));
+    tablaClientes.setSelectionForeground(Color.WHITE);
 
+    // Cabecera (Header)
     JTableHeader header = tablaClientes.getTableHeader();
-    header.setBackground(new Color(0, 22, 141));
-    header.setForeground(Color.WHITE);
+    header.setBackground(new Color(243, 244, 246)); // Gris claro para contraste
+    header.setForeground(new Color(31, 41, 55));   // Texto oscuro
     header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setPreferredSize(new Dimension(0, 35));
 
+    // Renderizador para alinear texto y mantener colores
     DefaultTableCellRenderer render = new DefaultTableCellRenderer();
-    render.setHorizontalAlignment(JLabel.CENTER);
     render.setBackground(new Color(31, 41, 55));
     render.setForeground(Color.WHITE);
+    render.setHorizontalAlignment(SwingConstants.LEFT);
 
     for (int i = 0; i < tablaClientes.getColumnCount(); i++) {
       tablaClientes.getColumnModel().getColumn(i).setCellRenderer(render);

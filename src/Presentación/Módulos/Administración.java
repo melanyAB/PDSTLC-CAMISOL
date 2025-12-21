@@ -21,18 +21,25 @@ public class Administración extends JPanel {
   }
 
   private void inicializarComponentes() {
-    setLayout(new BorderLayout(0, 20));
+    setLayout(new BorderLayout());
     setBackground(new Color(18, 18, 18));
-    setBorder(new EmptyBorder(20, 20, 20, 20));
+    setBorder(new EmptyBorder(10, 10, 10, 10));
 
-    JPanel panelHerramientas = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
+    JPanel panelHerramientas = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
     panelHerramientas.setOpaque(false);
 
-    Botón btnNuevo = new Botón("Registrar Usuario", new Color(37, 99, 235));
-    Botón btnEditar = new Botón("Actualizar Usuario", new Color(234, 177, 0));
-    Botón btnEstado = new Botón("Cambiar Estado", new Color(16, 185, 129));
+    Botón btnNuevo = new Botón("Registrar Usuario", new Color(40, 167, 69));
+    Botón btnEditar = new Botón("Modificar Usuario", new Color(234, 177, 0));
+    Botón btnEstado = new Botón("Cambiar Estado", new Color(147, 51, 234));
     Botón btnBackup = new Botón("Respaldar Sistema", new Color(59, 130, 246));
     Botón btnRestore = new Botón("Restaurar Sistema", new Color(239, 68, 68));
+
+    Dimension dimBoton = new Dimension(170, 40);
+    btnNuevo.setPreferredSize(dimBoton);
+    btnEditar.setPreferredSize(dimBoton);
+    btnEstado.setPreferredSize(dimBoton);
+    btnBackup.setPreferredSize(dimBoton);
+    btnRestore.setPreferredSize(dimBoton);
 
     panelHerramientas.add(btnNuevo);
     panelHerramientas.add(btnEditar);
@@ -89,22 +96,27 @@ public class Administración extends JPanel {
     tablaUsuarios = new JTable(modeloTabla);
     tablaUsuarios.setBackground(new Color(31, 41, 55));
     tablaUsuarios.setForeground(Color.WHITE);
-    tablaUsuarios.setRowHeight(30);
-    tablaUsuarios.setShowVerticalLines(false);
     tablaUsuarios.setGridColor(new Color(55, 65, 81));
+    tablaUsuarios.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    tablaUsuarios.setRowHeight(30);
+    tablaUsuarios.setSelectionBackground(new Color(75, 85, 99));
+    tablaUsuarios.setSelectionForeground(Color.WHITE);
 
+    // Cabecera (Header)
     JTableHeader header = tablaUsuarios.getTableHeader();
-    header.setBackground(new Color(0, 22, 141));
-    header.setForeground(Color.WHITE);
+    header.setBackground(new Color(243, 244, 246)); // Gris claro para contraste
+    header.setForeground(new Color(31, 41, 55));   // Texto oscuro
     header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setPreferredSize(new Dimension(0, 35));
 
-    DefaultTableCellRenderer center = new DefaultTableCellRenderer();
-    center.setHorizontalAlignment(JLabel.CENTER);
-    center.setBackground(new Color(31, 41, 55));
-    center.setForeground(Color.WHITE);
+    // Renderizador para alinear texto y mantener colores
+    DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+    render.setBackground(new Color(31, 41, 55));
+    render.setForeground(Color.WHITE);
+    render.setHorizontalAlignment(SwingConstants.LEFT);
 
     for (int i = 0; i < tablaUsuarios.getColumnCount(); i++) {
-      tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(center);
+      tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(render);
     }
   }
 
