@@ -1,14 +1,14 @@
 package Presentación.Ventanas;
 
 import Presentación.Módulos.Proveedor;
+import Presentación.Módulos.Tanquero;
 import Presentación.Recursos.Botón;
 import Presentación.Recursos.GestorAlertas;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -54,8 +54,8 @@ public class VentanaPrincipal extends JFrame {
 
         // Degradado
         GradientPaint gp = new GradientPaint(
-          0, 0, new Color(234, 177, 0),
-          getWidth(), 0, new Color(0, 22, 141));
+            0, 0, new Color(234, 177, 0),
+            getWidth(), 0, new Color(0, 22, 141));
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, getWidth(), getHeight());
       }
@@ -153,9 +153,9 @@ public class VentanaPrincipal extends JFrame {
     lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
     menu.add(lbl);
     botónInicio = Botón.crearBotónMenu("Inicio", null);
-    botónClientes = Botón.crearBotónMenu("Clientes",null);
+    botónClientes = Botón.crearBotónMenu("Clientes", null);
     botónTanqueros = Botón.crearBotónMenu("Tanqueros", null);
-    botónProveedores = Botón.crearBotónMenu("Proveedores",null);
+    botónProveedores = Botón.crearBotónMenu("Proveedores", null);
     botónFacturacion = Botón.crearBotónMenu("Facturación", null);
     botónInicio.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónClientes.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -210,10 +210,10 @@ public class VentanaPrincipal extends JFrame {
     botónAuditoria.addActionListener(e -> cambiarPanel("AUDITORÍA", new JPanel()));
     botónFacturacion.addActionListener(e -> cambiarPanel("FACTURACIÓN", new JPanel()));
     botónProveedores.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
-    botónTanqueros.addActionListener(e -> cambiarPanel("TANQUEROS", new JPanel()));
+    botónTanqueros.addActionListener(e -> cambiarPanel("TANQUEROS", new Tanquero()));
 
     botónSalir.addActionListener(e -> {
-      if(GestorAlertas.confirmarCerrarSesión(this, "¿Seguro que desea cerrar sesión?")) {
+      if (GestorAlertas.confirmarCerrarSesión(this, "¿Seguro que desea cerrar sesión?")) {
 
         dispose();
         System.exit(0);
@@ -258,9 +258,8 @@ public class VentanaPrincipal extends JFrame {
     tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
     tarjeta.setBackground(new Color(31, 41, 55));
     tarjeta.setBorder(BorderFactory.createCompoundBorder(
-      BorderFactory.createMatteBorder(3, 0, 0, 0, colorBorde),
-      new EmptyBorder(25, 20, 25, 20)
-    ));
+        BorderFactory.createMatteBorder(3, 0, 0, 0, colorBorde),
+        new EmptyBorder(25, 20, 25, 20)));
 
     JLabel lblValor = new JLabel(valor);
     lblValor.setFont(new Font("Segoe UI", Font.BOLD, 36));
