@@ -15,6 +15,7 @@ public class Facturación extends JPanel {
 
     private JTable tablaFacturas;
     private DefaultTableModel modeloTabla;
+    private JPanel panelFiltros;
     private JTextField txtBuscar;
     private JComboBox<String> comboEstado, comboCliente;
 
@@ -27,209 +28,344 @@ public class Facturación extends JPanel {
         setBackground(new Color(18, 18, 18));
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        JTabbedPane tabs = new JTabbedPane();
-        tabs.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        // Panel superior con pestañas para diferentes roles
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBackground(new Color(31, 41, 55));
+        tabbedPane.setForeground(Color.WHITE);
+        tabbedPane.setFont(new Font("Segoe UI", Font.BOLD, 13));
 
-        tabs.addTab("Secretaria", crearPanelSecretaria());
-        tabs.addTab("Dueños de Tanqueros", crearPanelDueños());
-        tabs.addTab("Gerente General", crearPanelGerente());
+        // Pestaña para Secretaria
+        tabbedPane.addTab("Secretaria", crearPanelSecretaria());
+        
+        // Pestaña para Dueños de Tanqueros
+        tabbedPane.addTab("Dueños Tanqueros", crearPanelDueñosTanqueros());
+        
+        // Pestaña para Gerente General
+        tabbedPane.addTab("Gerente General", crearPanelGerente());
 
-        add(tabs, BorderLayout.CENTER);
+        add(tabbedPane, BorderLayout.CENTER);
     }
 
-    // ===================== SECRETARIA =====================
     private JPanel crearPanelSecretaria() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(31, 41, 55));
+        panel.setBorder(new EmptyBorder(10, 0, 0, 0));
 
+        // Panel de botones para Secretaria
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelBotones.setOpaque(false);
 
-        Botón btnViaje = new Botón("Registrar Viaje", new Color(40, 167, 69));
-        Botón btnFactura = new Botón("Generar Factura", new Color(59, 130, 246));
-        Botón btnPago = new Botón("Registrar Pago", new Color(234, 177, 0));
-        Botón btnAnular = new Botón("Anular Factura", new Color(239, 68, 68));
-        Botón btnContra = new Botón("Contra Factura", new Color(147, 51, 234));
-        Botón btnCobro = new Botón("Gestión de Cobro", new Color(220, 38, 38));
-        Botón btnReporte = new Botón("Reportes", new Color(16, 185, 129));
+        // Botones específicos para Secretaria
+        Botón btnRegistrarViaje = new Botón("Registrar Datos Viaje", new Color(40, 167, 69));
+        Botón btnGenerarFactura = new Botón("Generar Factura", new Color(59, 130, 246));
+        Botón btnConsultarFactura = new Botón("Consultar Factura", new Color(70, 128, 139));
+        Botón btnAnularFactura = new Botón("Anular Factura", new Color(239, 68, 68));
+        Botón btnRegistrarPago = new Botón("Registrar Pago", new Color(147, 51, 234));
+        Botón btnGenerarContraFactura = new Botón("Contra Factura", new Color(249, 115, 22));
+        Botón btnProgramarRecordatorio = new Botón("Recordatorio Pago", new Color(156, 163, 175));
+        Botón btnGestionCobro = new Botón("Gestión Cobro", new Color(220, 38, 38));
+        Botón btnEmitirReportes = new Botón("Reportes Financieros", new Color(16, 185, 129));
 
-        Dimension d = new Dimension(170, 40);
-        for (Botón b : new Botón[]{btnViaje, btnFactura, btnPago, btnAnular, btnContra, btnCobro, btnReporte}) {
-            b.setPreferredSize(d);
-            panelBotones.add(b);
-        }
+        Dimension dimBoton = new Dimension(180, 40);
+        btnRegistrarViaje.setPreferredSize(dimBoton);
+        btnGenerarFactura.setPreferredSize(dimBoton);
+        btnConsultarFactura.setPreferredSize(dimBoton);
+        btnAnularFactura.setPreferredSize(dimBoton);
+        btnRegistrarPago.setPreferredSize(dimBoton);
+        btnGenerarContraFactura.setPreferredSize(dimBoton);
+        btnProgramarRecordatorio.setPreferredSize(dimBoton);
+        btnGestionCobro.setPreferredSize(dimBoton);
+        btnEmitirReportes.setPreferredSize(dimBoton);
+
+        panelBotones.add(btnRegistrarViaje);
+        panelBotones.add(btnGenerarFactura);
+        panelBotones.add(btnConsultarFactura);
+        panelBotones.add(btnAnularFactura);
+        panelBotones.add(btnRegistrarPago);
+        panelBotones.add(btnGenerarContraFactura);
+        panelBotones.add(btnProgramarRecordatorio);
+        panelBotones.add(btnGestionCobro);
+        panelBotones.add(btnEmitirReportes);
 
         panel.add(panelBotones, BorderLayout.NORTH);
 
-        // Filtros 
-        JPanel filtros = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        filtros.setOpaque(false);
+        // Panel de filtros
+        panelFiltros = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelFiltros.setOpaque(false);
+        panelFiltros.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-        txtBuscar = new JTextField(15);
-        comboEstado = new JComboBox<>(new String[]{"Todos", "Pendiente", "Pagada", "Anulada"});
-        comboCliente = new JComboBox<>(new String[]{"Todos", "Cliente A", "Cliente B"});
+        JLabel lblBuscar = new JLabel("Buscar:");
+        lblBuscar.setForeground(Color.WHITE);
+        lblBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+        txtBuscar = new JTextField(20);
+        txtBuscar.setPreferredSize(new Dimension(200, 35));
+        txtBuscar.setBackground(new Color(55, 65, 81));
+        txtBuscar.setForeground(Color.WHITE);
+        txtBuscar.setBorder(new LineBorder(new Color(75, 85, 99), 1));
+
+        JLabel lblEstado = new JLabel("Estado:");
+        lblEstado.setForeground(Color.WHITE);
+        lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+        comboEstado = new JComboBox<>(new String[]{"Todos", "Pendiente", "Pagada", "Anulada", "Vencida"});
+        comboEstado.setPreferredSize(new Dimension(150, 35));
+        comboEstado.setBackground(new Color(55, 65, 81));
+        comboEstado.setForeground(Color.WHITE);
+
+        JLabel lblCliente = new JLabel("Cliente:");
+        lblCliente.setForeground(Color.WHITE);
+        lblCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+        comboCliente = new JComboBox<>(new String[]{"Todos", "Cliente A", "Cliente B", "Cliente C"});
+        comboCliente.setPreferredSize(new Dimension(150, 35));
+        comboCliente.setBackground(new Color(55, 65, 81));
+        comboCliente.setForeground(Color.WHITE);
 
         Botón btnFiltrar = new Botón("Filtrar", new Color(70, 128, 139));
         btnFiltrar.setPreferredSize(new Dimension(100, 35));
 
-        filtros.add(crearLabel("Buscar:"));
-        filtros.add(txtBuscar);
-        filtros.add(crearLabel("Estado:"));
-        filtros.add(comboEstado);
-        filtros.add(crearLabel("Cliente:"));
-        filtros.add(comboCliente);
-        filtros.add(btnFiltrar);
+        panelFiltros.add(lblBuscar);
+        panelFiltros.add(txtBuscar);
+        panelFiltros.add(lblEstado);
+        panelFiltros.add(comboEstado);
+        panelFiltros.add(lblCliente);
+        panelFiltros.add(comboCliente);
+        panelFiltros.add(btnFiltrar);
 
-        // Tabla 
+        panel.add(panelFiltros, BorderLayout.CENTER);
+
+        // Tabla de facturas
         crearTablaFacturas();
-        JScrollPane scroll = new JScrollPane(tablaFacturas);
-        scroll.getViewport().setBackground(new Color(31, 41, 55));
-        scroll.setBorder(new LineBorder(new Color(55, 65, 81)));
+        JScrollPane scrollTabla = new JScrollPane(tablaFacturas);
+        scrollTabla.getViewport().setBackground(new Color(31, 41, 55));
+        scrollTabla.setBorder(new LineBorder(new Color(55, 65, 81), 1));
+        
+        JPanel panelTabla = new JPanel(new BorderLayout());
+        panelTabla.setOpaque(false);
+        panelTabla.setBorder(new EmptyBorder(10, 0, 0, 0));
+        panelTabla.add(scrollTabla, BorderLayout.CENTER);
+        
+        panel.add(panelTabla, BorderLayout.SOUTH);
 
-        JPanel centro = new JPanel(new BorderLayout());
-        centro.setOpaque(false);
-        centro.add(filtros, BorderLayout.NORTH);
-        centro.add(scroll, BorderLayout.CENTER);
-
-        panel.add(centro, BorderLayout.CENTER);
-
-        // Acciones 
-        btnViaje.addActionListener(e -> GestorAlertas.mostrarExito(this, "Formulario de viaje (GUI)"));
-        btnFactura.addActionListener(e -> GestorAlertas.mostrarExito(this, "Generar factura (GUI)"));
-        btnPago.addActionListener(e -> GestorAlertas.mostrarExito(this, "Registrar pago (GUI)"));
-        btnAnular.addActionListener(e -> GestorAlertas.mostrarAdvertencia(this, "Solicitud de anulación"));
-        btnContra.addActionListener(e -> GestorAlertas.mostrarInfo(this, "Contra factura (GUI)"));
-        btnCobro.addActionListener(e -> GestorAlertas.mostrarAdvertencia(this, "Gestión de cobro"));
-        btnReporte.addActionListener(e -> GestorAlertas.mostrarExito(this, "Reportes financieros"));
+        // Action Listeners para botones de Secretaria
+        btnRegistrarViaje.addActionListener(e -> 
+            GestorAlertas.mostrarExito(this, "Formulario de registro de viaje abierto")
+        );
+        
+        btnGenerarFactura.addActionListener(e -> 
+            GestorAlertas.mostrarExito(this, "Generando factura...")
+        );
+        
+        btnConsultarFactura.addActionListener(e -> 
+            GestorAlertas.mostrarInfo(this, "Mostrando detalles de la factura")
+        );
+        
+        btnAnularFactura.addActionListener(e -> 
+            GestorAlertas.mostrarAdvertencia(this, "¿Está seguro de anular esta factura?")
+        );
+        
+        btnRegistrarPago.addActionListener(e -> 
+            GestorAlertas.mostrarExito(this, "Registro de pago completado")
+        );
+        
+        btnFiltrar.addActionListener(e -> 
+            GestorAlertas.mostrarInfo(this, "Aplicando filtros...")
+        );
 
         return panel;
     }
 
-    // ===================== DUEÑOS =====================
-    private JPanel crearPanelDueños() {
-        JPanel panel = new JPanel(new GridLayout(2, 2, 15, 15));
+    private JPanel crearPanelDueñosTanqueros() {
+        JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(31, 41, 55));
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        panel.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-        panel.add(crearPanelInfo("Facturación Total", "$15,430.00", Color.GREEN));
-        panel.add(crearPanelInfo("Pagos Pendientes", "$3,200.00", Color.ORANGE));
-        panel.add(crearPanelInfo("Viajes Realizados", "24", Color.CYAN));
-        panel.add(crearPanelInfo("Rendimiento", "87%", Color.MAGENTA));
+        // Panel de botones para Dueños de Tanqueros
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelBotones.setOpaque(false);
+
+        Botón btnConsultarFacturacion = new Botón("Consultar Facturación", new Color(70, 128, 139));
+        Botón btnVerRendimiento = new Botón("Ver Rendimiento", new Color(16, 185, 129));
+        Botón btnConsultarPagos = new Botón("Consultar Pagos", new Color(59, 130, 246));
+        Botón btnDescargarComprobante = new Botón("Descargar Comprobante", new Color(147, 51, 234));
+
+        Dimension dimBoton = new Dimension(200, 40);
+        btnConsultarFacturacion.setPreferredSize(dimBoton);
+        btnVerRendimiento.setPreferredSize(dimBoton);
+        btnConsultarPagos.setPreferredSize(dimBoton);
+        btnDescargarComprobante.setPreferredSize(dimBoton);
+
+        panelBotones.add(btnConsultarFacturacion);
+        panelBotones.add(btnVerRendimiento);
+        panelBotones.add(btnConsultarPagos);
+        panelBotones.add(btnDescargarComprobante);
+
+        panel.add(panelBotones, BorderLayout.NORTH);
+
+        // Panel de información específica para dueños
+        JPanel panelInfo = new JPanel(new GridLayout(2, 2, 10, 10));
+        panelInfo.setOpaque(false);
+        panelInfo.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        panelInfo.add(crearPanelInfo("Facturación Total", "$15,430.50", Color.GREEN));
+        panelInfo.add(crearPanelInfo("Pagos Pendientes", "$3,200.00", Color.ORANGE));
+        panelInfo.add(crearPanelInfo("Viajes Realizados", "24", Color.CYAN));
+        panelInfo.add(crearPanelInfo("Rendimiento Mensual", "87%", Color.MAGENTA));
+
+        panel.add(panelInfo, BorderLayout.CENTER);
+
+        // Action Listeners
+        btnConsultarFacturacion.addActionListener(e -> 
+            GestorAlertas.mostrarInfo(this, "Mostrando facturación de tanqueros propios")
+        );
+        
+        btnDescargarComprobante.addActionListener(e -> 
+            GestorAlertas.mostrarExito(this, "Comprobante descargado exitosamente")
+        );
 
         return panel;
     }
 
-    // ===================== GERENTE =====================
     private JPanel crearPanelGerente() {
-        JPanel panel = new JPanel(new GridLayout(3, 3, 15, 15));
+        JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(31, 41, 55));
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        panel.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-        panel.add(crearPanelInfo("Facturación Total", "$45,890.75", Color.GREEN));
-        panel.add(crearPanelInfo("Cuentas por Cobrar", "$12,340.20", Color.ORANGE));
-        panel.add(crearPanelInfo("Clientes Activos", "18", Color.CYAN));
-        panel.add(crearPanelInfo("Facturas Pendientes", "7", Color.YELLOW));
-        panel.add(crearPanelInfo("Facturas Anuladas", "2", Color.RED));
-        panel.add(crearPanelInfo("Morosidad", "8.5%", Color.MAGENTA));
+        // Panel de botones para Gerente General
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        panelBotones.setOpaque(false);
+
+        Botón btnConsultarFactura = new Botón("Consultar Factura", new Color(70, 128, 139));
+        Botón btnConsultarReportes = new Botón("Consultar Reportes", new Color(59, 130, 246));
+        Botón btnRevisarDetalle = new Botón("Revisar Detalle", new Color(16, 185, 129));
+        Botón btnAprobarAnulaciones = new Botón("Aprobar Anulaciones", new Color(234, 177, 0));
+        Botón btnSupervisarCuentas = new Botón("Supervisar Cuentas", new Color(220, 38, 38));
+        Botón btnConfigurarCondiciones = new Botón("Configurar Condiciones", new Color(147, 51, 234));
+        Botón btnGenerarEstados = new Botón("Generar Estados", new Color(249, 115, 22));
+
+        Dimension dimBoton = new Dimension(180, 40);
+        btnConsultarFactura.setPreferredSize(dimBoton);
+        btnConsultarReportes.setPreferredSize(dimBoton);
+        btnRevisarDetalle.setPreferredSize(dimBoton);
+        btnAprobarAnulaciones.setPreferredSize(dimBoton);
+        btnSupervisarCuentas.setPreferredSize(dimBoton);
+        btnConfigurarCondiciones.setPreferredSize(dimBoton);
+        btnGenerarEstados.setPreferredSize(dimBoton);
+
+        panelBotones.add(btnConsultarFactura);
+        panelBotones.add(btnConsultarReportes);
+        panelBotones.add(btnRevisarDetalle);
+        panelBotones.add(btnAprobarAnulaciones);
+        panelBotones.add(btnSupervisarCuentas);
+        panelBotones.add(btnConfigurarCondiciones);
+        panelBotones.add(btnGenerarEstados);
+
+        panel.add(panelBotones, BorderLayout.NORTH);
+
+        // Panel de métricas para Gerente
+        JPanel panelMetricas = new JPanel(new GridLayout(3, 3, 10, 10));
+        panelMetricas.setOpaque(false);
+        panelMetricas.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        panelMetricas.add(crearPanelInfo("Facturación Total", "$45,890.75", Color.GREEN));
+        panelMetricas.add(crearPanelInfo("Cuentas por Cobrar", "$12,340.20", Color.ORANGE));
+        panelMetricas.add(crearPanelInfo("Clientes Activos", "18", Color.CYAN));
+        panelMetricas.add(crearPanelInfo("Facturas Pendientes", "7", Color.YELLOW));
+        panelMetricas.add(crearPanelInfo("Facturas Anuladas", "2", Color.RED));
+        panelMetricas.add(crearPanelInfo("Tasa de Morosidad", "8.5%", Color.MAGENTA));
+        panelMetricas.add(crearPanelInfo("Promedio de Pago", "4.2 días", Color.BLUE));
+        panelMetricas.add(crearPanelInfo("Facturación Promedio", "$2,550.60", Color.PINK));
+
+        panel.add(panelMetricas, BorderLayout.CENTER);
+
+        // Action Listeners
+        btnAprobarAnulaciones.addActionListener(e -> 
+            GestorAlertas.mostrarAdvertencia(this, "Revisando solicitudes de anulación")
+        );
+        
+        btnConfigurarCondiciones.addActionListener(e -> 
+            GestorAlertas.mostrarExito(this, "Configuración de condiciones guardada")
+        );
 
         return panel;
-    }
-
-    // COMPONENTES 
-    private JLabel crearLabel(String texto) {
-        JLabel lbl = new JLabel(texto);
-        lbl.setForeground(Color.WHITE);
-        lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        return lbl;
     }
 
     private JPanel crearPanelInfo(String titulo, String valor, Color color) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(55, 65, 81));
         panel.setBorder(new LineBorder(color, 2, true));
+        panel.setPreferredSize(new Dimension(200, 100));
 
-        JLabel t = new JLabel(titulo, SwingConstants.CENTER);
-        t.setForeground(Color.WHITE);
-        t.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        JLabel lblTitulo = new JLabel(titulo, SwingConstants.CENTER);
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblTitulo.setBorder(new EmptyBorder(10, 5, 5, 5));
 
-        JLabel v = new JLabel(valor, SwingConstants.CENTER);
-        v.setForeground(color);
-        v.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        JLabel lblValor = new JLabel(valor, SwingConstants.CENTER);
+        lblValor.setForeground(color);
+        lblValor.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblValor.setBorder(new EmptyBorder(5, 5, 10, 5));
 
-        panel.add(t, BorderLayout.NORTH);
-        panel.add(v, BorderLayout.CENTER);
+        panel.add(lblTitulo, BorderLayout.NORTH);
+        panel.add(lblValor, BorderLayout.CENTER);
+
         return panel;
     }
 
     private void crearTablaFacturas() {
         String[] columnas = {
-                "Factura", "Fecha", "Cliente", "Monto", "Estado", "Acción"
+            "N° Factura", "Fecha", "Cliente", "Monto", 
+            "Estado", "Fecha Vencimiento", "Acciones"
         };
 
         Object[][] datos = {
-                {"FAC-001", "20/12/2025", "Cliente A", "$1,250.00", "Pagada", "Ver"},
-                {"FAC-002", "19/12/2025", "Cliente B", "$890.50", "Pendiente", "Ver"}
+            {"FAC-001", "20/12/2025", "Cliente A", "$1,250.00", "Pagada", "25/12/2025", "Ver"},
+            {"FAC-002", "19/12/2025", "Cliente B", "$890.50", "Pendiente", "24/12/2025", "Ver"},
+            {"FAC-003", "18/12/2025", "Cliente C", "$2,340.00", "Anulada", "23/12/2025", "Ver"},
+            {"FAC-004", "17/12/2025", "Cliente D", "$1,780.25", "Pagada", "22/12/2025", "Ver"}
         };
 
         modeloTabla = new DefaultTableModel(datos, columnas) {
-            public boolean isCellEditable(int r, int c) { return c == 5; }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 6; // Solo la columna de acciones es editable
+            }
         };
 
         tablaFacturas = new JTable(modeloTabla);
-        tablaFacturas.setRowHeight(35);
         tablaFacturas.setBackground(new Color(31, 41, 55));
         tablaFacturas.setForeground(Color.WHITE);
+        tablaFacturas.setGridColor(new Color(55, 65, 81));
+        tablaFacturas.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        tablaFacturas.setRowHeight(35);
         tablaFacturas.setSelectionBackground(new Color(75, 85, 99));
+        tablaFacturas.setSelectionForeground(Color.WHITE);
 
-        tablaFacturas.getColumn("Acción").setCellRenderer(new ButtonRenderer());
-        tablaFacturas.getColumn("Acción").setCellEditor(new ButtonEditor(new JCheckBox()));
+        // Cabecera (Header)
+        JTableHeader header = tablaFacturas.getTableHeader();
+        header.setBackground(new Color(243, 244, 246));
+        header.setForeground(new Color(31, 41, 55));
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        header.setPreferredSize(new Dimension(0, 40));
 
-        JTableHeader h = tablaFacturas.getTableHeader();
-        h.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        h.setBackground(new Color(243, 244, 246));
-        h.setForeground(new Color(31, 41, 55));
+        // Renderizador para alinear texto y mantener colores
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setBackground(new Color(31, 41, 55));
+        render.setForeground(Color.WHITE);
+        render.setHorizontalAlignment(SwingConstants.CENTER);
 
-        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
-        r.setHorizontalAlignment(SwingConstants.CENTER);
-        r.setBackground(new Color(31, 41, 55));
-        r.setForeground(Color.WHITE);
-
-        for (int i = 0; i < 5; i++) {
-            tablaFacturas.getColumnModel().getColumn(i).setCellRenderer(r);
-        }
-    }
-
-    // BOTÓN EN TABLA
-    class ButtonRenderer extends JButton implements javax.swing.table.TableCellRenderer {
-        public ButtonRenderer() {
-            setText("Ver");
-            setForeground(Color.WHITE);
-            setBackground(new Color(59, 130, 246));
-            setFocusPainted(false);
-            setBorderPainted(false);
-        }
-        public Component getTableCellRendererComponent(JTable t, Object v, boolean s, boolean f, int r, int c) {
-            return this;
-        }
-    }
-
-    class ButtonEditor extends DefaultCellEditor {
-        private JButton button = new JButton();
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button.setForeground(Color.WHITE);
-            button.setBackground(new Color(59, 130, 246));
-            button.setFocusPainted(false);
-            button.addActionListener(e -> {
-                fireEditingStopped();
-                GestorAlertas.mostrarInfo(Facturación.this, "Vista previa de factura ");
-            });
+        for (int i = 0; i < tablaFacturas.getColumnCount(); i++) {
+            tablaFacturas.getColumnModel().getColumn(i).setCellRenderer(render);
         }
 
-        public Component getTableCellEditorComponent(JTable t, Object v, boolean s, int r, int c) {
-            button.setText("Ver");
-            return button;
-        }
+        // Ajustar ancho de columnas
+        tablaFacturas.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tablaFacturas.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tablaFacturas.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tablaFacturas.getColumnModel().getColumn(3).setPreferredWidth(120);
+        tablaFacturas.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tablaFacturas.getColumnModel().getColumn(5).setPreferredWidth(120);
+        tablaFacturas.getColumnModel().getColumn(6).setPreferredWidth(80);
     }
 }
