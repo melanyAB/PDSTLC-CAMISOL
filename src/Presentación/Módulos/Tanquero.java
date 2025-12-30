@@ -15,7 +15,7 @@ public class Tanquero extends JPanel {
     private JTable tabla;
     private DefaultTableModel modelo;
     private Botón botónRegistrar, botónConsultar, botónModificar, botónEliminar;
-    private Botón botónMantenimiento, botónIncidencias, botónDisponibilidad;
+    private Botón botónMantenimiento, botónIncidente, botónDisponibilidad;
     private Botón botónAsignarChofer, botónHistorialMant;
 
     public Tanquero() {
@@ -36,7 +36,7 @@ public class Tanquero extends JPanel {
         botónModificar = new Botón("Modificar", new Color(234, 177, 0));
         botónEliminar = new Botón("Eliminar", new Color(239, 68, 68));
         botónMantenimiento = new Botón("Mantenimiento", new Color(147, 51, 234));
-        botónIncidencias = new Botón("Incidencias", new Color(249, 115, 22));
+        botónIncidente = new Botón("Incidente", new Color(249, 115, 22));
         botónDisponibilidad = new Botón("Disponibilidad", new Color(20, 184, 166));
         botónAsignarChofer = new Botón("Asignar Chofer", new Color(99, 102, 241)); // NUEVO
         botónHistorialMant = new Botón("Historial Mant.", new Color(168, 85, 247)); // NUEVO
@@ -47,7 +47,7 @@ public class Tanquero extends JPanel {
         botónModificar.setPreferredSize(dimBoton);
         botónEliminar.setPreferredSize(dimBoton);
         botónMantenimiento.setPreferredSize(dimBoton);
-        botónIncidencias.setPreferredSize(dimBoton);
+        botónIncidente.setPreferredSize(dimBoton);
         botónDisponibilidad.setPreferredSize(dimBoton);
         botónAsignarChofer.setPreferredSize(dimBoton); // NUEVO
         botónHistorialMant.setPreferredSize(dimBoton); // NUEVO
@@ -57,7 +57,7 @@ public class Tanquero extends JPanel {
         panelBotones.add(botónModificar);
         panelBotones.add(botónEliminar);
         panelBotones.add(botónMantenimiento);
-        panelBotones.add(botónIncidencias);
+        panelBotones.add(botónIncidente);
         panelBotones.add(botónDisponibilidad);
         panelBotones.add(botónAsignarChofer); // NUEVO
         panelBotones.add(botónHistorialMant); // NUEVO
@@ -92,7 +92,7 @@ public class Tanquero extends JPanel {
         botónModificar.addActionListener(e -> abrirDialogoModificar());
         botónEliminar.addActionListener(e -> eliminar());
         botónMantenimiento.addActionListener(e -> abrirDialogoMantenimiento());
-        botónIncidencias.addActionListener(e -> abrirDialogoIncidencias());
+        botónIncidente.addActionListener(e -> abrirDialogoIncidente());
         botónDisponibilidad.addActionListener(e -> abrirDialogoDisponibilidad());
         botónAsignarChofer.addActionListener(e -> abrirDialogoAsignarChofer()); // NUEVO
         botónHistorialMant.addActionListener(e -> abrirDialogoHistorialMantenimientos()); // NUEVO
@@ -371,7 +371,7 @@ public class Tanquero extends JPanel {
         JTextField textoMarca = new JTextField(modelo.getValueAt(rowIndex, 1).toString(), 15);
         JTextField textoModelo = new JTextField(modelo.getValueAt(rowIndex, 2).toString(), 15);
         JTextField textoCapacidad = new JTextField(modelo.getValueAt(rowIndex, 4).toString(), 15);
-        JComboBox<String> comboEstado = new JComboBox<>(new String[] { "A - Activo", "I - Inactivo" });
+        JComboBox<String> comboEstado = new JComboBox<>(new String[] { "Activo", "Inactivo" });
         comboEstado.setSelectedItem(modelo.getValueAt(rowIndex, 5));
 
         gbc.gridx = 0;
@@ -534,8 +534,8 @@ public class Tanquero extends JPanel {
     }
 
     // ======================== DIÁLOGO INCIDENCIAS (rt11) ========================
-    private void abrirDialogoIncidencias() {
-        JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), "Reportar Incidencia ",
+    private void abrirDialogoIncidente() {
+        JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(this), "Reportar Incidente ",
                 Dialog.ModalityType.APPLICATION_MODAL);
         dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -607,7 +607,7 @@ public class Tanquero extends JPanel {
 
         botónReportar.addActionListener(ev -> {
             JOptionPane.showMessageDialog(dialogo,
-                    "Incidencia reportada exitosamente. Se notificará al área de mantenimiento.", "Éxito",
+                    "Incidente reportada exitosamente. Se notificará al área de mantenimiento.", "Éxito",
                     JOptionPane.INFORMATION_MESSAGE);
             dialogo.dispose();
         });
