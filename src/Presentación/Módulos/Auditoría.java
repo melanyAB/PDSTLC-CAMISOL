@@ -10,6 +10,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Auditoría extends JPanel {
 
@@ -58,9 +63,7 @@ public class Auditoría extends JPanel {
       GestorAlertas.mostrarAdvertencia(this, "Mostrando alertas de seguridad registradas")
     );
 
-    btnExportar.addActionListener(e ->
-      GestorAlertas.mostrarExito(this, "Informe de auditoría exportado exitosamente")
-    );
+    btnExportar.addActionListener(e -> exportarCSV());
   }
 
   private void crearTabla() {
@@ -111,4 +114,42 @@ public class Auditoría extends JPanel {
     tablaLogs.getColumnModel().getColumn(1).setPreferredWidth(140);
     tablaLogs.getColumnModel().getColumn(5).setPreferredWidth(220);
   }
+
+
+
+  private void exportarCSV() {
+    // Fecha para el nombre del archivo
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String nombrePorDefecto = "informe_auditoria_" + LocalDateTime.now().format(formatter);
+
+    JFileChooser chooser = new JFileChooser();
+    chooser.setDialogTitle("Exportar informe de auditoría");
+    chooser.setSelectedFile(new File(nombrePorDefecto + ".csv"));
+
+    if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+      File archivo = chooser.getSelectedFile();
+
+      try (FileWriter writer = new FileWriter(archivo)) {
+
+        for (int i = 0; i < modeloTabla.getColumnCount(); i++) {
+          writer.append(modeloTabla.getColumnName(i)).append(",");
+        }
+        writer.append("\n");
+
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+          for (int j = 0; j < modeloTabla.getColumnCount(); j++) {
+            writer.append(modeloTabla.getValueAt(i, j).toString()).append(",");
+          }
+          writer.append("\n");
+        }
+
+        GestorAlertas.mostrarExito(this, "Informe exportado correctamente");
+
+      } catch (IOException e) {
+        GestorAlertas.mostrarError(this, "Error al exportar el informe");
+      }
+    }
+  }
+
+
 }

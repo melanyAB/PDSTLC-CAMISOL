@@ -1,5 +1,7 @@
 package Presentación.Recursos;
 
+import Presentación.Módulos.Auditoría;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,5 +37,11 @@ public class GestorAlertas {
     JLabel label = new JLabel(mensaje);
     label.setHorizontalAlignment(SwingConstants.CENTER);
     JOptionPane.showMessageDialog(component, label, "Información", JOptionPane.PLAIN_MESSAGE);
+  }
+
+  public static void mostrarError(Component component, String errorAlExportarElInforme) {
+    JLabel label = new JLabel(errorAlExportarElInforme);
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+    JOptionPane.showMessageDialog(component, label, "Error", JOptionPane.PLAIN_MESSAGE);
   }
 }
