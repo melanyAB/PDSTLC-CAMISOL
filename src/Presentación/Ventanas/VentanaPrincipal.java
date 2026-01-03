@@ -22,7 +22,7 @@ public class VentanaPrincipal extends JFrame {
   private Botón botónAdmin;
   private Botón botónAuditoría;
   private Botón botónCliente;
-  private Botón botónFacturación;
+  private Botón botónServicio;
   private Botón botónProveedor;
   private Botón botónTanquero;
   private Botón botónSalir;
@@ -155,12 +155,12 @@ public class VentanaPrincipal extends JFrame {
     botónCliente = Botón.crearBotónMenu("Clientes", null);
     botónTanquero = Botón.crearBotónMenu("Tanqueros", null);
     botónProveedor = Botón.crearBotónMenu("Proveedores", null);
-    botónFacturación = Botón.crearBotónMenu("Facturación", null);
+    botónServicio = Botón.crearBotónMenu("Servicio", null);
     botónInicio.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónCliente.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónTanquero.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónProveedor.setAlignmentX(Component.CENTER_ALIGNMENT);
-    botónFacturación.setAlignmentX(Component.CENTER_ALIGNMENT);
+    botónServicio.setAlignmentX(Component.CENTER_ALIGNMENT);
     menu.add(botónInicio);
     menu.add(Box.createVerticalStrut(5));
     menu.add(botónCliente);
@@ -169,7 +169,7 @@ public class VentanaPrincipal extends JFrame {
     menu.add(Box.createVerticalStrut(5));
     menu.add(botónProveedor);
     menu.add(Box.createVerticalStrut(5));
-    menu.add(botónFacturación);
+    menu.add(botónServicio);
     menu.add(Box.createVerticalStrut(15));
 
     // Sistema
@@ -207,7 +207,7 @@ public class VentanaPrincipal extends JFrame {
     botónCliente.addActionListener(e -> cambiarPanel("CLIENTES", new Cliente()));
     botónAdmin.addActionListener(e -> cambiarPanel("ADMINISTRACIÓN", new Administración()));
     botónAuditoría.addActionListener(e -> cambiarPanel("AUDITORÍA", new Auditoría()));
-    botónFacturación.addActionListener(e -> cambiarPanel("FACTURACIÓN", new Facturación()));
+    botónServicio.addActionListener(e -> cambiarPanel("Servicio", new Servicio()));
     botónProveedor.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
     botónTanquero.addActionListener(e -> cambiarPanel("TANQUEROS", new Tanquero()));
 
@@ -244,7 +244,7 @@ public class VentanaPrincipal extends JFrame {
     dashboard.add(crearTarjetaEstadistica("8", "Viajes Activos", new Color(234, 177, 0)));
     dashboard.add(crearTarjetaEstadistica("124", "Clientes", new Color(40, 167, 69)));
     dashboard.add(crearTarjetaEstadistica("23", "Tanqueros", new Color(70, 128, 139)));
-    dashboard.add(crearTarjetaEstadistica("$12,450", "Facturación Hoy", new Color(168, 85, 247)));
+    dashboard.add(crearTarjetaEstadistica("$12,450", "Servicio Hoy", new Color(168, 85, 247)));
     dashboard.add(crearTarjetaEstadistica("0", "Alertas", new Color(239, 68, 68)));
 
     panelContenido.add(dashboard, BorderLayout.CENTER);
