@@ -1,6 +1,7 @@
 package Presentación.Recursos;
 
 import Presentación.Módulos.Auditoría;
+import Presentación.Módulos.Servicio;
 
 import javax.swing.*;
 import java.awt.*;

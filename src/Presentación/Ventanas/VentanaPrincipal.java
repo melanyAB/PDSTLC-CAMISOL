@@ -155,7 +155,7 @@ public class VentanaPrincipal extends JFrame {
     botónCliente = Botón.crearBotónMenu("Clientes", null);
     botónTanquero = Botón.crearBotónMenu("Tanqueros", null);
     botónProveedor = Botón.crearBotónMenu("Proveedores", null);
-    botónServicio = Botón.crearBotónMenu("Servicio", null);
+    botónServicio = Botón.crearBotónMenu("Servicios", null);
     botónInicio.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónCliente.setAlignmentX(Component.CENTER_ALIGNMENT);
     botónTanquero.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -207,7 +207,7 @@ public class VentanaPrincipal extends JFrame {
     botónCliente.addActionListener(e -> cambiarPanel("CLIENTES", new Cliente()));
     botónAdmin.addActionListener(e -> cambiarPanel("ADMINISTRACIÓN", new Administración()));
     botónAuditoría.addActionListener(e -> cambiarPanel("AUDITORÍA", new Auditoría()));
-    botónServicio.addActionListener(e -> cambiarPanel("Servicio", new Servicio()));
+    botónServicio.addActionListener(e -> cambiarPanel("SERVICIOS", new Servicio()));
     botónProveedor.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
     botónTanquero.addActionListener(e -> cambiarPanel("TANQUEROS", new Tanquero()));
 
