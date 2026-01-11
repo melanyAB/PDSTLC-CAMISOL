@@ -3,6 +3,7 @@ package Presentación.Ventanas;
 import Presentación.Módulos.*;
 import Presentación.Recursos.Botón;
 import Presentación.Recursos.GestorAlertas;
+
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,8 +54,8 @@ public class VentanaPrincipal extends JFrame {
 
         // Degradado
         GradientPaint gp = new GradientPaint(
-            0, 0, new Color(234, 177, 0),
-            getWidth(), 0, new Color(0, 22, 141));
+          0, 0, new Color(234, 177, 0),
+          getWidth(), 0, new Color(0, 22, 141));
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, getWidth(), getHeight());
       }
@@ -206,7 +207,11 @@ public class VentanaPrincipal extends JFrame {
     botónInicio.addActionListener(e -> mostrarInicio());
     botónCliente.addActionListener(e -> cambiarPanel("CLIENTES", new Cliente()));
     botónAdmin.addActionListener(e -> cambiarPanel("ADMINISTRACIÓN", new Administración()));
-    botónAuditoría.addActionListener(e -> cambiarPanel("AUDITORÍA", new Auditoría()));
+    botónAuditoría.addActionListener(e -> {
+      if (Auditoría.solicitarContraseña()) {
+        cambiarPanel("AUDITORÍA", Auditoría.obtenerInstancia());
+      }
+    });
     botónServicio.addActionListener(e -> cambiarPanel("SERVICIOS", new Servicio()));
     botónProveedor.addActionListener(e -> cambiarPanel("PROVEEDORES", new Proveedor()));
     botónTanquero.addActionListener(e -> cambiarPanel("TANQUEROS", new Tanquero()));
@@ -257,8 +262,8 @@ public class VentanaPrincipal extends JFrame {
     tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
     tarjeta.setBackground(new Color(31, 41, 55));
     tarjeta.setBorder(BorderFactory.createCompoundBorder(
-        BorderFactory.createMatteBorder(3, 0, 0, 0, colorBorde),
-        new EmptyBorder(25, 20, 25, 20)));
+      BorderFactory.createMatteBorder(3, 0, 0, 0, colorBorde),
+      new EmptyBorder(25, 20, 25, 20)));
 
     JLabel lblValor = new JLabel(valor);
     lblValor.setFont(new Font("Segoe UI", Font.BOLD, 36));

@@ -1,5 +1,6 @@
 package Presentación.Ventanas;
 
+import Presentación.Módulos.Auditoría;
 import Presentación.Recursos.Botón;
 import Presentación.Recursos.GestorAlertas;
 
@@ -232,12 +233,14 @@ public class VentanaInicio extends JFrame {
     }
 
     if (usuario.equals("admin") && contraseña.equals("admin")) {
+      Auditoría.obtenerInstancia().loginExitoso();
       dispose();
       new VentanaPrincipal().setVisible(true);
     } else {
       GestorAlertas.mostrarErrorLogin(this, "Usuario o contraseña incorrecto");
       textoUsuario.setText("");
       textoContraseña.setText("");
+      Auditoría.obtenerInstancia().loginFallido(usuario);
     }
   }
 
